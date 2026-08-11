@@ -21,11 +21,12 @@ export const botConfig = {
     // 3 = Watching
     // 4 = Custom
     // 5 = Competing
+    // 6 = Casa fonia space
     activities: [
       {
-        name: "Custom Status", // required by Discord API, not shown in the client
+        name: "Casa fonia space", // required by Discord API, not shown in the client
         state: "stalking",     // this is what people actually see
-        type: 4,               // Custom
+        type: 6,               // Custom
       },
     ],
   },
