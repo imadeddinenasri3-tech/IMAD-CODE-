@@ -20,6 +20,9 @@ import { isCollectorManagedComponent } from '../utils/collectorComponents.js';
 import { ResponseCoordinator } from '../utils/responseCoordinator.js';
 import { enforceDefaultCommandPermissions } from '../utils/permissionGuard.js';
 
+// 👑 الـ User ID ديالك حاطينو هنا كـ Owner رئيسي
+const OWNER_ID = "1536503494729662504";
+
 const COMMAND_ERROR_SUBTYPES = {
   warn: 'warn_failed',
   kick: 'kick_failed',
@@ -67,6 +70,16 @@ export default {
               userId: interaction.user?.id,
               command: interaction.commandName
             });
+
+            // ⛔ المنع الخاص: إذا لم يكن المستخدم هو صاحب البوت، يتم حظر الأمر فوراً
+            if (interaction.user.id !== OWNER_ID && !isBotOwner(interaction.user.id)) {
+              throw createError(
+                'Access denied: Bot is restricted to owner only',
+                ErrorTypes.PERMISSION,
+                '⛔ عفواً، هاد البوت مخصص فقط لمطور البوت وخاص بكازافونيا.',
+                withTraceContext({ commandName: interaction.commandName }, interactionTraceContext)
+              );
+            }
 
             validateChatInputPayloadOrThrow(interaction, withTraceContext({
               type: 'command_input_validation',
