@@ -20,7 +20,8 @@ function parseNodesFromEnv() {
     try {
         const parsed = JSON.parse(raw);
         return Array.isArray(parsed) ? parsed : null;
-    } catch {
+    } catch (error) {
+        console.error("L-ghalat f parsing dyal LAVALINK_NODES men .env:", error.message);
         return null;
     }
 }
@@ -46,7 +47,8 @@ function loadNodesFromFile() {
     try {
         const parsed = JSON.parse(readFileSync(nodesFile, 'utf8'));
         return parseNodesPayload(parsed);
-    } catch {
+    } catch (error) {
+        console.error("L-ghalat f parsing dyal nodes.json:", error.message);
         return null;
     }
 }
